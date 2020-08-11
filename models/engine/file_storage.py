@@ -12,7 +12,6 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
 
         obj_dict = {}
-
         if cls is None:
             return FileStorage.__objects
         else:
