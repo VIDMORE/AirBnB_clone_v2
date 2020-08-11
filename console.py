@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -19,16 +20,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+        'BaseModel': BaseModel, 'User': User, 'Place': Place,
+        'State': State, 'City': City, 'Amenity': Amenity,
+        'Review': Review
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+        'number_rooms': int, 'number_bathrooms': int,
+        'max_guest': int, 'price_by_night': int,
+        'latitude': float, 'longitude': float
+    }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -115,16 +116,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+
+        params = shlex.split(args)
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif params[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        else:
+            new_instance = divide_params(params)
+            storage.save()
+            print(new_instance.id)
+            storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -319,6 +323,55 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+
+def divide_params(params=[]):
+    """Function to split the parameters given to create an object"""
+
+    new_obj = eval(params[0])()
+
+    for param in params[1:]:
+        try:
+            key = param.split("=")[0]
+            value = param.split("=")[1]
+            value = value.replace("_", " ")
+            if checkInt(value):
+                setattr(new_obj, key, int(value))
+                continue
+            elif checkFloat(value):
+                setattr(new_obj, key, float(value))
+                continue
+            else:
+                setattr(new_obj, key, value)
+                continue
+        except ValueError:
+            continue
+    return new_obj
+
+
+def checkInt(command):
+    """
+    Checks if a string is an Integer
+    """
+
+    try:
+        int(command.strip('"'))
+        return 1
+    except ValueError:
+        return 0
+
+
+def checkFloat(command):
+    """
+    Checks if a string is a Float
+    """
+
+    try:
+        float(command.strip('"'))
+        return 1
+    except ValueError:
+        return 0
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
