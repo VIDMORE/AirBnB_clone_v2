@@ -7,10 +7,10 @@ import os
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.base_model import BaseModel, Base
-""" from models.user import User
-from models.place import Place """
-""" from models.amenity import Amenity
-from models.review import Review """
+from models.user import User
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class DBStorage:
@@ -19,7 +19,11 @@ class DBStorage:
     __engine = None
     __session = None
     classes = {"State": State,
-               "City": City}
+               "City": City,
+               "Place": Place,
+               "User": User,
+               "Amenity": Amenity,
+               "Review": Review}
 
     def __init__(self):
         """Init method"""
