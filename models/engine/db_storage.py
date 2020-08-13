@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 """This module defines a class to manage db storage for hbnb clone"""
 
+from models.city import City
+from models.state import State
 import os
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.base_model import BaseModel, Base
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+""" from models.user import User
+from models.place import Place """
+""" from models.amenity import Amenity
+from models.review import Review """
 
 
 class DBStorage:
@@ -18,12 +18,8 @@ class DBStorage:
 
     __engine = None
     __session = None
-    classes = {"User": User,
-               "State": State,
-               "City": City,
-               "Amenity": Amenity,
-               "Place": Place,
-               "Review": Review}
+    classes = {"State": State,
+               "City": City}
 
     def __init__(self):
         """Init method"""
@@ -36,7 +32,6 @@ class DBStorage:
                                       .format(user, passw, host, db),
                                       pool_pre_ping=True)
 
-        Base.metadata.create_all(self.__engine)
         if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(bind=self.__engine)
 
@@ -49,7 +44,7 @@ class DBStorage:
                 key = obj.__class__.__name__ + '.' + obj.id
                 dic[key] = obj
         else:
-            for class_ in DBStorage.classes:
+            for class_ in DBStorage.classes.values():
                 data = self.__session.query(class_).all()
                 for row in data:
                     key = '{}.{}'.format(row.__class__.name, row.id)
