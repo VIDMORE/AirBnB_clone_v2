@@ -3,10 +3,16 @@
 
 from models.review import Review
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
 import models
 import os
+
+
+place_amenity = Table("place_amenity", Base.metadata,
+                      Column("place_id", String(60), ForeignKey("places.id")),
+                      Column("amenity_id", String(60),
+                             ForeignKey("amenities.id")))
 
 
 class Place(BaseModel, Base):
@@ -23,9 +29,12 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+    amenity_ids = []
 
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship('Review', backref='place')
+        amenities = relationship(
+            "Amenity", secondary=place_amenity, viewonly=False)
     else:
         @property
         def reviews(self):
@@ -33,3 +42,17 @@ class Place(BaseModel, Base):
 
             return [review for review in models.storage.all(Review)
                     if review.place_id == self.id]
+
+        @property
+        def amenities(self):
+            """Getter attribute in case of file storage"""
+
+            return [amenity for amenity in models.storage.all(Amenity)
+                    if amenity.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, obj):
+            """Setter method for amenities"""
+
+            if (type(obj) is Amenity):
+                self.amenity_ids.append(obj.id)
