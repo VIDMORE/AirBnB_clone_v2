@@ -39,7 +39,7 @@ class BaseModel:
             if not self.id:
                 self.id = str(uuid.uuid4())
 
-            else if "__class__" in kwargs:
+            elif "__class__" in kwargs:
                 del kwargs['__class__']
             self.__dict__.update(kwargs)
 
