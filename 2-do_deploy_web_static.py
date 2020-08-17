@@ -33,7 +33,7 @@ def do_deploy(archive_path):
             run('mkdir -p {}'.format(route))
             run('tar -xzvf /tmp/{} -C {}/'.format(file_name, route))
             run('rm /tmp/{}'.format(file_name))
-            run('sudo mv {}/web_static {}/'.format(new))
+            run('sudo mv {}/web_static {}/'.format(route))
             run('sudo rm -rf {}'.format('/data/web_static/current'))
             run('sudo ln -s {}/ {}'.format(route, '/data/web_static/current'))
             return True
