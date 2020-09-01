@@ -3,7 +3,6 @@
 
 from models.city import City
 from models.state import State
-import os
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
 from models.base_model import BaseModel, Base
@@ -11,6 +10,7 @@ from models.user import User
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+import os
 
 
 class DBStorage:
@@ -80,3 +80,8 @@ class DBStorage:
                                        expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """Closes the current session to force reload"""
+
+        self.__session.close()

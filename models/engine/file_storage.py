@@ -65,3 +65,8 @@ class FileStorage:
             if obj_name in FileStorage.__objects.keys():
                 del self.__objects[obj_name]
             self.save
+
+    def close(self):
+        """This function Deserialize the JSON file to objects"""
+
+        self.reload()

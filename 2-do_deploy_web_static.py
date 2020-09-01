@@ -9,9 +9,8 @@ env.hosts = ['35.237.242.122', '54.234.135.146']
 
 
 def do_deploy(archive_path):
-    """
-        deploy the archive to the webservers
-    """
+    """Deploy the archive to the webservers"""
+
     if exists(archive_path) is False:
         return False
 
@@ -29,6 +28,5 @@ def do_deploy(archive_path):
         run("sudo rm /data/web_static/current")
         run("sudo ln -s {} /data/web_static/current".format(input_path))
         return True
-
     except Exception:
         return False
