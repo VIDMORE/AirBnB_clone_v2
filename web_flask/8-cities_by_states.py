@@ -25,7 +25,7 @@ def teardown_db(self):
 
 @app.route('/cities_by_states', strict_slashes=False)
 def city_state_list():
-    """method to render states from storage"""
+    """Function to render states from storage"""
 
     states = sorted(storage.all(State).values(), key=lambda x: x.name)
     return render_template("8-cities_by_states.html", states=states)
