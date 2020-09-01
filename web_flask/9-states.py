@@ -9,12 +9,20 @@ from models import State
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def display_states():
-    """Function that displays states"""
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
+def display_states_cities(id=None):
+    """Function that displays states and cities by state id"""
 
     states = sorted(storage.all(State).values(), key=lambda x: x.name)
-    return render_template('7-states_list.html', states=states)
+    selected_state = None
+    if id:
+        for state in states:
+            if state.id == id:
+                selected_state = state
+
+    return render_template('9-states.html', states=states,
+                           id=id, selected_state=selected_state,)
 
 
 @app.teardown_appcontext
@@ -22,14 +30,6 @@ def teardown_db(self):
     """Function that removes the current SQLAlchemy Session"""
 
     storage.close()
-
-
-@app.route('/cities_by_states', strict_slashes=False)
-def city_state_list():
-    """Function to render states from storage"""
-
-    states = sorted(storage.all(State).values(), key=lambda x: x.name)
-    return render_template("8-cities_by_states.html", states=states)
 
 
 if __name__ == "__main__":
