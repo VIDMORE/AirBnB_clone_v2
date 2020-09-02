@@ -1,0 +1,133 @@
+.places {
+	font-size: 30px;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+.places h1 {
+	margin-left: 15px;
+	font-size: 30px;
+	margin-bottom: 10px;
+	text-align: left;
+}
+
+.places .article-line {
+	text-align: center;
+	justify-content: space-around;
+	display:inline-flex;
+	flex-wrap: wrap
+}
+
+.places article {
+	width: 390px;
+	height: auto;
+	padding: 20px;
+	margin: 20px;
+	border: 1px solid #FF5A5F;
+	border-radius: 4px;
+	display: inline-block;
+	text-align: left;
+}
+
+.places h2 {
+	font-size: 30px;
+	margin: 3px auto 20px auto;
+	padding-left: 5px;
+	float: left;
+	max-width: 300px;
+}
+
+
+.price_by_night {
+	color: #FF5A5F;
+	border: 4px solid #FF5A5F;
+	border-radius: 100px;
+	min-width: 60px;
+	height: 60px;
+	font-size: 30px;
+	float: right;
+}
+
+
+.price_by_night p {
+	margin-bottom: 0px;
+	margin-top: 15px;
+	text-align: center;
+}
+
+.information {
+	height: 80px;
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	clear: both;
+	text-align: center;
+	margin-top: 80px;
+	justify-content: space-around;
+}
+
+.max_guest {
+	width: 100px;
+	display: inline-block;
+}
+
+.max_guest p {
+	font-size: 12px;
+	margin: 8px;
+}
+
+.icon-max_guest {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+	background-image: url('../images/icon_group.png');
+	background-repeat: no-repeat;
+}
+
+.number_rooms {
+	width: 100px;
+	display: inline-block;
+}
+
+.number_rooms p {
+	font-size: 12px;
+	margin: 8px;
+}
+
+.icon-number_rooms {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+	background-image: url('../images/icon_bed.png');
+	background-repeat: no-repeat;
+}
+
+.number_bathrooms {
+	width: 100px;
+	display: inline-block;
+}
+
+.icon-number_bathrooms {
+	width: 50px;
+	height: 50px;
+	margin: 0 auto;
+	background-image: url('../images/icon_bath.png');
+	background-repeat: no-repeat;
+}
+
+.number_bathrooms p {
+	font-size: 12px;
+	margin: 8px;
+}
+
+.user {
+	text-align: left;
+	font-size: 16px;
+	margin-top: 25px;
+	clear: both;
+}
+
+.description {
+	text-align: left;
+	font-size: 16px
+}
