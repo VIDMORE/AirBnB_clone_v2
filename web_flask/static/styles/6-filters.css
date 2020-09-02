@@ -66,6 +66,10 @@ h4 {
 	overflow: auto;
 }
 
+.popover::-webkit-scrollbar {
+	display: none;
+}
+
 .popover h2 {
 	font-size: 20px;
 	margin-bottom: 5px;
@@ -79,8 +83,6 @@ h4 {
 .popover li {
 	list-style-type: none;
 	margin: 10px 10px;
-
-
 }
 
 .location:hover .popover {
